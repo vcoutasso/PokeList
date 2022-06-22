@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		4C9BD3B228629DF000D89B89 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9BD3B128629DF000D89B89 /* AppDelegate.swift */; };
 		4C9BD3B428629DF000D89B89 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9BD3B328629DF000D89B89 /* SceneDelegate.swift */; };
-		4C9BD3B628629DF000D89B89 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9BD3B528629DF000D89B89 /* ViewController.swift */; };
+		4C9BD3B628629DF000D89B89 /* PokemonListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9BD3B528629DF000D89B89 /* PokemonListController.swift */; };
 		4C9BD3BB28629DF200D89B89 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4C9BD3BA28629DF200D89B89 /* Assets.xcassets */; };
 		4C9BD3BE28629DF200D89B89 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4C9BD3BC28629DF200D89B89 /* LaunchScreen.storyboard */; };
 		4C9BD3C928629DF300D89B89 /* PokeListTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9BD3C828629DF300D89B89 /* PokeListTests.swift */; };
@@ -38,7 +38,7 @@
 		4C9BD3AE28629DF000D89B89 /* PokeList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PokeList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C9BD3B128629DF000D89B89 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4C9BD3B328629DF000D89B89 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		4C9BD3B528629DF000D89B89 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		4C9BD3B528629DF000D89B89 /* PokemonListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonListController.swift; sourceTree = "<group>"; };
 		4C9BD3BA28629DF200D89B89 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4C9BD3BD28629DF200D89B89 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4C9BD3BF28629DF200D89B89 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -97,12 +97,10 @@
 		4C9BD3B028629DF000D89B89 /* PokeList */ = {
 			isa = PBXGroup;
 			children = (
-				4C9BD3B128629DF000D89B89 /* AppDelegate.swift */,
-				4C9BD3B328629DF000D89B89 /* SceneDelegate.swift */,
-				4C9BD3B528629DF000D89B89 /* ViewController.swift */,
-				4C9BD3BA28629DF200D89B89 /* Assets.xcassets */,
-				4C9BD3BC28629DF200D89B89 /* LaunchScreen.storyboard */,
-				4C9BD3BF28629DF200D89B89 /* Info.plist */,
+				4C9BD3E52862A5A300D89B89 /* Lifecycle */,
+				4C9BD3E42862A58F00D89B89 /* Resources */,
+				4C9BD3E12862A56600D89B89 /* Scenes */,
+				4C9BD3E32862A58400D89B89 /* Supporting-Files */,
 			);
 			path = PokeList;
 			sourceTree = "<group>";
@@ -122,6 +120,72 @@
 				4C9BD3D428629DF300D89B89 /* PokeListUITestsLaunchTests.swift */,
 			);
 			path = PokeListUITests;
+			sourceTree = "<group>";
+		};
+		4C9BD3E12862A56600D89B89 /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				4C9BD3E22862A56A00D89B89 /* PokemonList */,
+			);
+			path = Scenes;
+			sourceTree = "<group>";
+		};
+		4C9BD3E22862A56A00D89B89 /* PokemonList */ = {
+			isa = PBXGroup;
+			children = (
+				4C9BD3E72862AA2200D89B89 /* Model */,
+				4C9BD3E62862AA1B00D89B89 /* View */,
+				4C9BD3E82862AA2800D89B89 /* Presenter */,
+			);
+			path = PokemonList;
+			sourceTree = "<group>";
+		};
+		4C9BD3E32862A58400D89B89 /* Supporting-Files */ = {
+			isa = PBXGroup;
+			children = (
+				4C9BD3BF28629DF200D89B89 /* Info.plist */,
+			);
+			path = "Supporting-Files";
+			sourceTree = "<group>";
+		};
+		4C9BD3E42862A58F00D89B89 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				4C9BD3BA28629DF200D89B89 /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		4C9BD3E52862A5A300D89B89 /* Lifecycle */ = {
+			isa = PBXGroup;
+			children = (
+				4C9BD3B128629DF000D89B89 /* AppDelegate.swift */,
+				4C9BD3B328629DF000D89B89 /* SceneDelegate.swift */,
+				4C9BD3BC28629DF200D89B89 /* LaunchScreen.storyboard */,
+			);
+			path = Lifecycle;
+			sourceTree = "<group>";
+		};
+		4C9BD3E62862AA1B00D89B89 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				4C9BD3B528629DF000D89B89 /* PokemonListController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		4C9BD3E72862AA2200D89B89 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		4C9BD3E82862AA2800D89B89 /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Presenter;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -254,7 +318,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4C9BD3B628629DF000D89B89 /* ViewController.swift in Sources */,
+				4C9BD3B628629DF000D89B89 /* PokemonListController.swift in Sources */,
 				4C9BD3B228629DF000D89B89 /* AppDelegate.swift in Sources */,
 				4C9BD3B428629DF000D89B89 /* SceneDelegate.swift in Sources */,
 			);
@@ -427,7 +491,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = H7BM7N56V5;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = PokeList/Info.plist;
+				INFOPLIST_FILE = "PokeList/Supporting-Files/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
@@ -455,7 +519,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = H7BM7N56V5;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = PokeList/Info.plist;
+				INFOPLIST_FILE = "PokeList/Supporting-Files/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
