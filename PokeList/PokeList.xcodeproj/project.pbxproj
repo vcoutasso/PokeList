@@ -133,9 +133,9 @@
 		4C9BD3E22862A56A00D89B89 /* PokemonList */ = {
 			isa = PBXGroup;
 			children = (
-				4C9BD3E72862AA2200D89B89 /* Model */,
-				4C9BD3E62862AA1B00D89B89 /* View */,
-				4C9BD3E82862AA2800D89B89 /* Presenter */,
+				4C9BD3E72862AA2200D89B89 /* Models */,
+				4C9BD3E62862AA1B00D89B89 /* Views */,
+				4C9BD3E82862AA2800D89B89 /* Presenters */,
 			);
 			path = PokemonList;
 			sourceTree = "<group>";
@@ -166,26 +166,26 @@
 			path = Lifecycle;
 			sourceTree = "<group>";
 		};
-		4C9BD3E62862AA1B00D89B89 /* View */ = {
+		4C9BD3E62862AA1B00D89B89 /* Views */ = {
 			isa = PBXGroup;
 			children = (
 				4C9BD3B528629DF000D89B89 /* PokemonListController.swift */,
 			);
-			path = View;
+			path = Views;
 			sourceTree = "<group>";
 		};
-		4C9BD3E72862AA2200D89B89 /* Model */ = {
+		4C9BD3E72862AA2200D89B89 /* Models */ = {
 			isa = PBXGroup;
 			children = (
 			);
-			path = Model;
+			path = Models;
 			sourceTree = "<group>";
 		};
-		4C9BD3E82862AA2800D89B89 /* Presenter */ = {
+		4C9BD3E82862AA2800D89B89 /* Presenters */ = {
 			isa = PBXGroup;
 			children = (
 			);
-			path = Presenter;
+			path = Presenters;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
