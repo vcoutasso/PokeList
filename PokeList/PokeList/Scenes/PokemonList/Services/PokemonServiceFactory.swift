@@ -1,7 +1,10 @@
 import Foundation
 
-final class PokemonServiceFactory: PokeApiServiceFactoryProtocol {
+final class PokemonServiceFactory: PokeApiServiceFactory {
     static func createService() -> PokeApiService<Pokemon> {
-        PokeApiService<Pokemon>(endpointUrlString: "https://pokeapi.co/api/v2/pokemon/", decoder: JSONDecoder())
+        let endpointUrlString = "https://pokeapi.co/api/v2/pokemon/"
+        let decoder = JSONDecoder()
+        
+        return PokeApiService<Pokemon>(endpointUrlString: endpointUrlString, decoder: decoder)
     }
 }

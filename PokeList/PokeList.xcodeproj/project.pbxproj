@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4C447776286415C200E916CE /* PokeApiServiceFactoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C447775286415C200E916CE /* PokeApiServiceFactoryProtocol.swift */; };
+		4C447776286415C200E916CE /* PokeApiServiceFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C447775286415C200E916CE /* PokeApiServiceFactory.swift */; };
 		4C4477782864176000E916CE /* PokemonServiceFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C4477772864176000E916CE /* PokemonServiceFactory.swift */; };
 		4C44777D28641C4800E916CE /* PokeApiResultInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C44777C28641C4800E916CE /* PokeApiResultInfo.swift */; };
 		4C44777F28641C5900E916CE /* PokeApiDataProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C44777E28641C5900E916CE /* PokeApiDataProtocol.swift */; };
@@ -42,7 +42,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		4C447775286415C200E916CE /* PokeApiServiceFactoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokeApiServiceFactoryProtocol.swift; sourceTree = "<group>"; };
+		4C447775286415C200E916CE /* PokeApiServiceFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokeApiServiceFactory.swift; sourceTree = "<group>"; };
 		4C4477772864176000E916CE /* PokemonServiceFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonServiceFactory.swift; sourceTree = "<group>"; };
 		4C44777C28641C4800E916CE /* PokeApiResultInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokeApiResultInfo.swift; sourceTree = "<group>"; };
 		4C44777E28641C5900E916CE /* PokeApiDataProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokeApiDataProtocol.swift; sourceTree = "<group>"; };
@@ -101,7 +101,7 @@
 			isa = PBXGroup;
 			children = (
 				4C9BD3EA2862AB8A00D89B89 /* PokeApiService.swift */,
-				4C447775286415C200E916CE /* PokeApiServiceFactoryProtocol.swift */,
+				4C447775286415C200E916CE /* PokeApiServiceFactory.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -379,7 +379,7 @@
 				4C9BD3EB2862AB8A00D89B89 /* PokeApiService.swift in Sources */,
 				4C44777D28641C4800E916CE /* PokeApiResultInfo.swift in Sources */,
 				4C9BD3B228629DF000D89B89 /* AppDelegate.swift in Sources */,
-				4C447776286415C200E916CE /* PokeApiServiceFactoryProtocol.swift in Sources */,
+				4C447776286415C200E916CE /* PokeApiServiceFactory.swift in Sources */,
 				4C9BD3B428629DF000D89B89 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
