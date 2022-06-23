@@ -1,5 +1,5 @@
 import Foundation
 
-protocol PokeApiDataProtocol: Decodable {
+protocol PokeApiDataProtocol: Codable {
     var id: Int { get }
 }

@@ -1,6 +1,6 @@
 import Foundation
 
-struct PokeApiResultInfo: Decodable {
+struct PokeApiResultInfo: Codable {
     let name: String
     let url: String
 }

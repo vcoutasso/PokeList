@@ -1,6 +1,6 @@
 import Foundation
 
-struct PokeApiResponse: Decodable {
+struct PokeApiResponse: Codable {
     let count: Int
     let next: String?
     let previous: String?
