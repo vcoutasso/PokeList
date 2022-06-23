@@ -3,7 +3,7 @@ import Foundation
 protocol PokeApiServiceProtocol {
     associatedtype RequestData: PokeApiDataProtocol
 
-    var endpointUrlString: String { get }
+    var endpointUrl: URL { get }
     var decoder: JSONDecoder { get }
 
     func fetchNextPage(completion: @escaping ([RequestData]) -> Void)
@@ -14,11 +14,11 @@ final class PokeApiService<T: PokeApiDataProtocol>: PokeApiServiceProtocol {
     
     private var latestResponse: PokeApiResponse?
 
-    let endpointUrlString: String
+    let endpointUrl: URL
     let decoder: JSONDecoder
 
-    init(endpointUrlString: String, decoder: JSONDecoder) {
-        self.endpointUrlString = endpointUrlString
+    init(endpointUrl: URL, decoder: JSONDecoder) {
+        self.endpointUrl = endpointUrl
         self.decoder = decoder
     }
 
@@ -28,11 +28,10 @@ final class PokeApiService<T: PokeApiDataProtocol>: PokeApiServiceProtocol {
 
     private func fetchApiResponse(completion: @escaping () -> Void) {
         guard latestResponse == nil || latestResponse?.next != nil,
-              let nextRequestString = latestResponse?.next ?? Optional(endpointUrlString),
-              let requestUrl = URL(string: nextRequestString)
+              let url = latestResponse?.next == nil ? endpointUrl : URL(string: (latestResponse?.next)!)
         else { return }
 
-        let dataTask = URLSession.shared.dataTask(with: requestUrl) { [weak self] data, response, error in
+        let dataTask = URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
             guard error == nil,
                   let self = self,
                   let data = data,
