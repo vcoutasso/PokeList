@@ -16,7 +16,6 @@
 		4C9BD3B628629DF000D89B89 /* PokemonListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9BD3B528629DF000D89B89 /* PokemonListController.swift */; };
 		4C9BD3BB28629DF200D89B89 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4C9BD3BA28629DF200D89B89 /* Assets.xcassets */; };
 		4C9BD3BE28629DF200D89B89 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4C9BD3BC28629DF200D89B89 /* LaunchScreen.storyboard */; };
-		4C9BD3C928629DF300D89B89 /* PokeListTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9BD3C828629DF300D89B89 /* PokeListTests.swift */; };
 		4C9BD3D328629DF300D89B89 /* PokeListUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9BD3D228629DF300D89B89 /* PokeListUITests.swift */; };
 		4C9BD3D528629DF300D89B89 /* PokeListUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9BD3D428629DF300D89B89 /* PokeListUITestsLaunchTests.swift */; };
 		4C9BD3EB2862AB8A00D89B89 /* PokeApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9BD3EA2862AB8A00D89B89 /* PokeApiService.swift */; };
@@ -54,7 +53,6 @@
 		4C9BD3BD28629DF200D89B89 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4C9BD3BF28629DF200D89B89 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4C9BD3C428629DF300D89B89 /* PokeListTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PokeListTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		4C9BD3C828629DF300D89B89 /* PokeListTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokeListTests.swift; sourceTree = "<group>"; };
 		4C9BD3CE28629DF300D89B89 /* PokeListUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PokeListUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C9BD3D228629DF300D89B89 /* PokeListUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokeListUITests.swift; sourceTree = "<group>"; };
 		4C9BD3D428629DF300D89B89 /* PokeListUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokeListUITestsLaunchTests.swift; sourceTree = "<group>"; };
@@ -151,7 +149,6 @@
 		4C9BD3C728629DF300D89B89 /* PokeListTests */ = {
 			isa = PBXGroup;
 			children = (
-				4C9BD3C828629DF300D89B89 /* PokeListTests.swift */,
 			);
 			path = PokeListTests;
 			sourceTree = "<group>";
@@ -312,6 +309,7 @@
 					};
 					4C9BD3C328629DF300D89B89 = {
 						CreatedOnToolsVersion = 13.4;
+						LastSwiftMigration = 1340;
 						TestTargetID = 4C9BD3AD28629DF000D89B89;
 					};
 					4C9BD3CD28629DF300D89B89 = {
@@ -388,7 +386,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4C9BD3C928629DF300D89B89 /* PokeListTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -603,15 +600,22 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = H7BM7N56V5;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.vcoutasso.PokeListTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PokeList.app/PokeList";
@@ -623,11 +627,17 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = H7BM7N56V5;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.vcoutasso.PokeListTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
