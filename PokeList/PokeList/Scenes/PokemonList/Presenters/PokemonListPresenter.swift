@@ -1,19 +1,24 @@
 import Foundation
 
 protocol PokemonListPresentationLogic: AnyObject {
-    var viewController: PokemonListDisplayLogic? { get }
+    var displayLogicDelegate: PokemonListDisplayLogic? { get }
     var remoteService: PokeApiService<Pokemon> { get }
 
     func fetchDataRequested()
 
-    func registerDisplayLogic(viewController: PokemonListDisplayLogic)
+    func registerDisplayLogicDelegate(_ delegate: PokemonListDisplayLogic)
 }
 
 final class PokemonListPresenter: PokemonListPresentationLogic {
     // MARK: - Protocol properties
 
-    weak var viewController: PokemonListDisplayLogic?
+    weak var displayLogicDelegate: PokemonListDisplayLogic?
     let remoteService: PokeApiService<Pokemon>
+
+    // MARK: - Private properties
+
+    private var pokemons: [[Pokemon]] = [[]]
+    private var sections: [String] = ["Pokemons"]
 
     // MARK: - Initialization
 
@@ -24,12 +29,18 @@ final class PokemonListPresenter: PokemonListPresentationLogic {
     // MARK: - Protocol methods
 
     func fetchDataRequested() {
-        remoteService.fetchNextPage { [weak self] pokemons in
-            self?.viewController?.displayPokemons(pokemons)
+        remoteService.fetchNextPage { [weak self] pokemonPage in
+            guard let self = self else { return }
+            // TODO: Separate pokemons into sections
+            self.pokemons[0].append(contentsOf: pokemonPage)
+            
+            DispatchQueue.main.async {
+                self.displayLogicDelegate?.displayPokemons(self.pokemons, sections: self.sections)
+            }
         }
     }
 
-    func registerDisplayLogic(viewController: PokemonListDisplayLogic) {
-        self.viewController = viewController
+    func registerDisplayLogicDelegate(_ delegate: PokemonListDisplayLogic) {
+        self.displayLogicDelegate = delegate
     }
 }

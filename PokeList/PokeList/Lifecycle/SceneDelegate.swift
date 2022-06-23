@@ -15,6 +15,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let presenter = PokemonListPresenter(remoteService: service)
         let adapter = PokemonTableAdapter()
         let rootViewController = PokemonListViewController(presenter: presenter, adapter: adapter)
+        presenter.registerDisplayLogicDelegate(rootViewController)
 
         window = UIWindow(windowScene: windowScene)
         window?.rootViewController = rootViewController

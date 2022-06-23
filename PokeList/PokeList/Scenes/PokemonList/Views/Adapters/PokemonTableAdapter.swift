@@ -4,17 +4,17 @@ import UIKit
 protocol TableViewAdapter: UITableViewDataSource, UITableViewDelegate {
     associatedtype DataType: PokeApiData
 
-    var items: [DataType] { get }
+    var items: [[DataType]] { get }
     var sections: [String] { get }
 
-    func populateTable(items: [DataType], sections: [String])
+    func populate(items: [[DataType]], sections: [String])
 }
 
 final class PokemonTableAdapter: NSObject, TableViewAdapter {
-    private(set) var items: [Pokemon] = []
+    private(set) var items: [[Pokemon]] = [[]]
     private(set) var sections: [String] = []
 
-    func populateTable(items: [DataType], sections: [String]) {
+    func populate(items: [[Pokemon]], sections: [String]) {
         self.items = items
         self.sections = sections
     }
@@ -28,11 +28,16 @@ final class PokemonTableAdapter: NSObject, TableViewAdapter {
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        items.count
+        items[section].count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        UITableViewCell(frame: .zero)
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: PokemonTableViewCell.defaultReuseIdentifier, for: indexPath) as? PokemonTableViewCell else { return PokemonTableViewCell() }
+
+        let pokemon = items[indexPath.section][indexPath.row]
+        cell.setup(pokemon: pokemon)
+
+        return cell
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
