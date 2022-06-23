@@ -1,12 +1,39 @@
 import UIKit
 
+protocol PokemonListDisplayLogic: AnyObject {
+    func displayPokemons(_ pokemons: [Pokemon])
+}
+
 final class PokemonListViewController: UIViewController {
-    let service = PokemonServiceFactory.create()
+
+    // MARK: - Dependencies
+
+    private let presenter: PokemonListPresentationLogic
+    private let adapter: PokemonTableAdapter
+
+    // MARK: - Initialization
+
+    init(presenter: PokemonListPresentationLogic, adapter: PokemonTableAdapter) {
+        self.presenter = presenter
+        self.adapter = adapter
+        super.init(nibName: nil, bundle: nil)
+
+        self.presenter.registerDisplayLogic(viewController: self)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemPink
-        service.fetchNextPage(completion: { pokemons in print(pokemons) })
+
+        presenter.fetchDataRequested()
     }
 }
 
+extension PokemonListViewController: PokemonListDisplayLogic {
+    func displayPokemons(_ pokemons: [Pokemon]) {
+        // TODO: Implement
+    }
+}

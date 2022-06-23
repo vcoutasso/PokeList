@@ -1,7 +1,7 @@
 import Foundation
 
 protocol PokeApiServiceProtocol {
-    associatedtype RequestData: PokeApiDataProtocol
+    associatedtype RequestData: PokeApiData
 
     var endpointUrl: URL { get }
     var decoder: JSONDecoder { get }
@@ -9,22 +9,32 @@ protocol PokeApiServiceProtocol {
     func fetchNextPage(completion: @escaping ([RequestData]) -> Void)
 }
 
-final class PokeApiService<T: PokeApiDataProtocol>: PokeApiServiceProtocol {
+final class PokeApiService<T: PokeApiData>: PokeApiServiceProtocol {
     typealias RequestData = T
-    
-    private var currentResponse: PokeApiResponse?
+
+    // MARK: - Protocol properties
 
     let endpointUrl: URL
     let decoder: JSONDecoder
+
+    // MARK: - Private properties
+
+    private var currentResponse: PokeApiResponse?
+
+    // MARK: - Inialization
 
     init(endpointUrl: URL, decoder: JSONDecoder) {
         self.endpointUrl = endpointUrl
         self.decoder = decoder
     }
 
+    // MARK: - Protocol methods
+
     func fetchNextPage(completion: @escaping ([RequestData]) -> Void) {
         fetchApiResponse { self.fetchDetails(completion: completion) }
     }
+
+    // MARK: - Helper methods
 
     private func fetchApiResponse(completion: @escaping () -> Void) {
         guard currentResponse == nil || currentResponse?.next != nil,

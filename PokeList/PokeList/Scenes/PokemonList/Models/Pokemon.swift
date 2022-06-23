@@ -1,6 +1,6 @@
 import Foundation
 
-struct Pokemon: PokeApiDataProtocol {
+struct Pokemon: PokeApiData {
     let id: Int
     let name: String
     let height: Int

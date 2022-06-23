@@ -1,7 +1,7 @@
 import Foundation
 
 protocol PokeApiServiceFactory {
-    associatedtype RequestData: PokeApiDataProtocol
+    associatedtype RequestData: PokeApiData
 
     static func create() -> PokeApiService<RequestData>
 }
