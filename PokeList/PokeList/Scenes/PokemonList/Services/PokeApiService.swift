@@ -1,21 +1,55 @@
 import Foundation
 
 protocol PokeApiServiceProtocol {
-    func fetchPokemonPage(completion: @escaping ([Pokemon]) -> Void)
+    associatedtype RequestData: PokeApiDataProtocol
+
+    var endpointUrlString: String { get }
+    var decoder: JSONDecoder { get }
+
+    func fetchNextPage(completion: @escaping ([RequestData]) -> Void)
 }
 
-final class PokeApiService: PokeApiServiceProtocol {
-    private let endpointUrlString = "https://pokeapi.co/api/v2/pokemon/"
+final class PokeApiService<T: PokeApiDataProtocol>: PokeApiServiceProtocol {
+    typealias RequestData = T
+    
     private var latestResponse: PokeApiResponse?
 
-    func fetchPokemonPage(completion: @escaping ([Pokemon]) -> Void) {
-        fetchApiResponse { self.fetchPokemonDetails(completion: completion) }
+    let endpointUrlString: String
+    let decoder: JSONDecoder
+
+    init(endpointUrlString: String, decoder: JSONDecoder) {
+        self.endpointUrlString = endpointUrlString
+        self.decoder = decoder
     }
 
-    private func fetchPokemonDetails(completion: @escaping ([Pokemon]) -> Void) {
+    func fetchNextPage(completion: @escaping ([RequestData]) -> Void) {
+        fetchApiResponse { self.fetchDetails(completion: completion) }
+    }
+
+    private func fetchApiResponse(completion: @escaping () -> Void) {
+        guard latestResponse == nil || latestResponse?.next != nil,
+              let nextRequestString = latestResponse?.next ?? Optional(endpointUrlString),
+              let requestUrl = URL(string: nextRequestString)
+        else { return }
+
+        let dataTask = URLSession.shared.dataTask(with: requestUrl) { [weak self] data, response, error in
+            guard error == nil,
+                  let self = self,
+                  let data = data,
+                  let result = try? self.decoder.decode(PokeApiResponse.self, from: data)
+            else { return }
+
+            self.latestResponse = result
+            completion()
+        }
+
+        dataTask.resume()
+    }
+
+    private func fetchDetails(completion: @escaping ([RequestData]) -> Void) {
         guard let latestResponse = latestResponse else { return }
 
-        var pokemonList = [Pokemon]()
+        var pokemonList = [RequestData]()
         let dispatchGroup = DispatchGroup()
 
         for pokemonInfo in latestResponse.results {
@@ -23,11 +57,14 @@ final class PokeApiService: PokeApiServiceProtocol {
 
             dispatchGroup.enter()
 
-            let dataTask = URLSession.shared.dataTask(with: url) { data, response, error in
-                guard let data = data,
-                      let pokemon = try? JSONDecoder().decode(Pokemon.self, from: data) else { return }
+            let dataTask = URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
+                guard error == nil,
+                      let self = self,
+                      let data = data,
+                      let result = try? self.decoder.decode(RequestData.self, from: data)
+                else { return }
 
-                pokemonList.append(pokemon)
+                pokemonList.append(result)
 
                 dispatchGroup.leave()
             }
@@ -38,24 +75,5 @@ final class PokeApiService: PokeApiServiceProtocol {
         dispatchGroup.notify(queue: .global()) {
             completion(pokemonList.sorted { $0.id < $1.id })
         }
-    }
-
-    private func fetchApiResponse(completion: @escaping () -> Void) {
-        guard latestResponse == nil || latestResponse?.next != nil,
-              let nextRequestString = latestResponse?.next ?? Optional(endpointUrlString),
-              let requestUrl = URL(string: nextRequestString)
-        else { return }
-
-        let dataTask = URLSession.shared.dataTask(with: requestUrl) { [weak self] data, response, error in
-            guard let self = self,
-                  let data = data,
-                  let response = try? JSONDecoder().decode(PokeApiResponse.self, from: data)
-            else { return }
-
-            self.latestResponse = response
-            completion()
-        }
-
-        dataTask.resume()
     }
 }

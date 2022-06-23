@@ -1,12 +1,12 @@
 import UIKit
 
-class PokemonListViewController: UIViewController {
-    let service = PokeApiService()
+final class PokemonListViewController: UIViewController {
+    let service = PokemonServiceFactory.createService()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemPink
-        service.fetchPokemonPage(completion: { pokemons in print(pokemons) })
+        service.fetchNextPage(completion: { pokemons in print(pokemons) })
     }
 }
 

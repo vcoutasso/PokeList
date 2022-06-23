@@ -1,6 +1,6 @@
 import Foundation
 
-struct Pokemon: Decodable {
+struct Pokemon: PokeApiDataProtocol {
     let id: Int
     let name: String
     let height: Int
