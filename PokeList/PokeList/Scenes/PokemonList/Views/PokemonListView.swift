@@ -13,10 +13,11 @@ final class PokemonListView: CodedView {
 
     // MARK: - Initialization
 
-    init(delegate: UITableViewDelegate, dataSource: UITableViewDataSource) {
+    init(delegate: UITableViewDelegate, dataSource: UITableViewDataSource, prefetchDataSource: UITableViewDataSourcePrefetching) {
         super.init(frame: .zero)
         tableView.delegate = delegate
         tableView.dataSource = dataSource
+        tableView.prefetchDataSource = prefetchDataSource
     }
 
     // MARK: - Public methods

@@ -50,10 +50,19 @@ final class PokemonTableViewCell: CodedTableViewCell, ReusableView {
         return stack
     }()
 
+    private lazy var loadingIndicatorView: UIActivityIndicatorView = {
+        let view = UIActivityIndicatorView(style: .medium)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.hidesWhenStopped = true
+
+        return view
+    }()
+
     // MARK: - View lifecycle
 
     override func addSubviews() {
         addSubview(stackView)
+        addSubview(loadingIndicatorView)
     }
 
     override func constrainSubviews() {
@@ -62,16 +71,27 @@ final class PokemonTableViewCell: CodedTableViewCell, ReusableView {
             stackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -LayoutMetrics.cellMargin),
             stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: LayoutMetrics.cellMargin),
             stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: LayoutMetrics.cellMargin),
+
+            loadingIndicatorView.centerXAnchor.constraint(equalTo: centerXAnchor),
+            loadingIndicatorView.centerYAnchor.constraint(equalTo: centerYAnchor),
         ])
     }
 
     // MARK: - Cell Setup
 
-    func setup(pokemon: Pokemon) {
-        idLabel.text = String(pokemon.id)
-        nameLabel.text = pokemon.name
-        heightLabel.text = String(pokemon.height)
-        weightLabel.text = String(pokemon.weight)
+    func setup(pokemon: Pokemon?) {
+        if let pokemon = pokemon {
+            loadingIndicatorView.stopAnimating()
+            stackView.isHidden = false
+
+            idLabel.text = String(pokemon.id)
+            nameLabel.text = pokemon.name
+            heightLabel.text = String(pokemon.height)
+            weightLabel.text = String(pokemon.weight)
+        } else {
+            stackView.isHidden = true
+            loadingIndicatorView.startAnimating()
+        }
     }
 }
 

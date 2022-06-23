@@ -17,8 +17,7 @@ final class PokemonListPresenter: PokemonListPresentationLogic {
 
     // MARK: - Private properties
 
-    private var pokemons: [[Pokemon]] = [[]]
-    private var sections: [String] = ["Pokemons"]
+    private var pokemons: [Pokemon] = []
 
     // MARK: - Initialization
 
@@ -29,13 +28,12 @@ final class PokemonListPresenter: PokemonListPresentationLogic {
     // MARK: - Protocol methods
 
     func fetchDataRequested() {
-        remoteService.fetchNextPage { [weak self] pokemonPage in
+        remoteService.fetchNextPage { [weak self] pokemonPage, pokemonCount in
             guard let self = self else { return }
-            // TODO: Separate pokemons into sections
-            self.pokemons[0].append(contentsOf: pokemonPage)
+            self.pokemons.append(contentsOf: pokemonPage)
             
             DispatchQueue.main.async {
-                self.displayLogicDelegate?.displayPokemons(self.pokemons, sections: self.sections)
+                self.displayLogicDelegate?.displayPokemons(self.pokemons, pokemonCount: pokemonCount)
             }
         }
     }
