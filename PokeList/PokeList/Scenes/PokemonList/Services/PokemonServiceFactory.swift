@@ -1,7 +1,7 @@
 import Foundation
 
 final class PokemonServiceFactory: PokeApiServiceFactory {
-    static func createService() -> PokeApiService<Pokemon> {
+    static func create() -> PokeApiService<Pokemon> {
         var components = URLComponents()
         components.scheme = "https"
         components.host = "pokeapi.co"

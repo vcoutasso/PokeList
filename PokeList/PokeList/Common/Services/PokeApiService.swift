@@ -12,7 +12,7 @@ protocol PokeApiServiceProtocol {
 final class PokeApiService<T: PokeApiDataProtocol>: PokeApiServiceProtocol {
     typealias RequestData = T
     
-    private var latestResponse: PokeApiResponse?
+    private var currentResponse: PokeApiResponse?
 
     let endpointUrl: URL
     let decoder: JSONDecoder
@@ -27,8 +27,8 @@ final class PokeApiService<T: PokeApiDataProtocol>: PokeApiServiceProtocol {
     }
 
     private func fetchApiResponse(completion: @escaping () -> Void) {
-        guard latestResponse == nil || latestResponse?.next != nil,
-              let url = latestResponse?.next == nil ? endpointUrl : URL(string: (latestResponse?.next)!)
+        guard currentResponse == nil || currentResponse?.next != nil,
+              let url = currentResponse?.next == nil ? endpointUrl : URL(string: (currentResponse?.next)!)
         else { return }
 
         let dataTask = URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
@@ -38,7 +38,7 @@ final class PokeApiService<T: PokeApiDataProtocol>: PokeApiServiceProtocol {
                   let result = try? self.decoder.decode(PokeApiResponse.self, from: data)
             else { return }
 
-            self.latestResponse = result
+            self.currentResponse = result
             completion()
         }
 
@@ -46,7 +46,7 @@ final class PokeApiService<T: PokeApiDataProtocol>: PokeApiServiceProtocol {
     }
 
     private func fetchDetails(completion: @escaping ([RequestData]) -> Void) {
-        guard let latestResponse = latestResponse else { return }
+        guard let latestResponse = currentResponse else { return }
 
         var pokemonList = [RequestData]()
         let dispatchGroup = DispatchGroup()

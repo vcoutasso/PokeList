@@ -1,7 +1,7 @@
 import UIKit
 
 final class PokemonListViewController: UIViewController {
-    let service = PokemonServiceFactory.createService()
+    let service = PokemonServiceFactory.create()
 
     override func viewDidLoad() {
         super.viewDidLoad()
