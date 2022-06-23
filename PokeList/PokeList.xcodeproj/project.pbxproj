@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		4C447776286415C200E916CE /* PokeApiServiceFactoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C447775286415C200E916CE /* PokeApiServiceFactoryProtocol.swift */; };
 		4C4477782864176000E916CE /* PokemonServiceFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C4477772864176000E916CE /* PokemonServiceFactory.swift */; };
+		4C44777D28641C4800E916CE /* PokeApiResultInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C44777C28641C4800E916CE /* PokeApiResultInfo.swift */; };
+		4C44777F28641C5900E916CE /* PokeApiDataProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C44777E28641C5900E916CE /* PokeApiDataProtocol.swift */; };
 		4C9BD3B228629DF000D89B89 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9BD3B128629DF000D89B89 /* AppDelegate.swift */; };
 		4C9BD3B428629DF000D89B89 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9BD3B328629DF000D89B89 /* SceneDelegate.swift */; };
 		4C9BD3B628629DF000D89B89 /* PokemonListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9BD3B528629DF000D89B89 /* PokemonListController.swift */; };
@@ -42,6 +44,8 @@
 /* Begin PBXFileReference section */
 		4C447775286415C200E916CE /* PokeApiServiceFactoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokeApiServiceFactoryProtocol.swift; sourceTree = "<group>"; };
 		4C4477772864176000E916CE /* PokemonServiceFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonServiceFactory.swift; sourceTree = "<group>"; };
+		4C44777C28641C4800E916CE /* PokeApiResultInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokeApiResultInfo.swift; sourceTree = "<group>"; };
+		4C44777E28641C5900E916CE /* PokeApiDataProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokeApiDataProtocol.swift; sourceTree = "<group>"; };
 		4C9BD3AE28629DF000D89B89 /* PokeList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PokeList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C9BD3B128629DF000D89B89 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4C9BD3B328629DF000D89B89 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -87,6 +91,7 @@
 		4C44777928641B8300E916CE /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				4C44777B28641C2F00E916CE /* Models */,
 				4C44777A28641B8C00E916CE /* Services */,
 			);
 			path = Common;
@@ -99,6 +104,16 @@
 				4C447775286415C200E916CE /* PokeApiServiceFactoryProtocol.swift */,
 			);
 			path = Services;
+			sourceTree = "<group>";
+		};
+		4C44777B28641C2F00E916CE /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				4C9BD3EE2862BAB500D89B89 /* PokeApiResponse.swift */,
+				4C44777C28641C4800E916CE /* PokeApiResultInfo.swift */,
+				4C44777E28641C5900E916CE /* PokeApiDataProtocol.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		4C9BD3A528629DF000D89B89 = {
@@ -207,7 +222,6 @@
 			isa = PBXGroup;
 			children = (
 				4C9BD3EC2862AEC600D89B89 /* Pokemon.swift */,
-				4C9BD3EE2862BAB500D89B89 /* PokeApiResponse.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -360,8 +374,10 @@
 				4C4477782864176000E916CE /* PokemonServiceFactory.swift in Sources */,
 				4C9BD3EF2862BAB500D89B89 /* PokeApiResponse.swift in Sources */,
 				4C9BD3ED2862AEC600D89B89 /* Pokemon.swift in Sources */,
+				4C44777F28641C5900E916CE /* PokeApiDataProtocol.swift in Sources */,
 				4C9BD3B628629DF000D89B89 /* PokemonListController.swift in Sources */,
 				4C9BD3EB2862AB8A00D89B89 /* PokeApiService.swift in Sources */,
+				4C44777D28641C4800E916CE /* PokeApiResultInfo.swift in Sources */,
 				4C9BD3B228629DF000D89B89 /* AppDelegate.swift in Sources */,
 				4C447776286415C200E916CE /* PokeApiServiceFactoryProtocol.swift in Sources */,
 				4C9BD3B428629DF000D89B89 /* SceneDelegate.swift in Sources */,
