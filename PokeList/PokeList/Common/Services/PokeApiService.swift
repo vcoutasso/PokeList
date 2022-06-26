@@ -22,17 +22,25 @@ final class PokeApiService<T: PokeApiData>: PokeApiServiceProtocol {
     private var currentResponse: PokeApiResponse?
     private var lastRequestURL: URL?
 
+    private let queue: DispatchQueue
+    private let semaphore: DispatchSemaphore
+
     // MARK: - Inialization
 
     init(endpointUrl: URL, decoder: JSONDecoder) {
         self.endpointUrl = endpointUrl
         self.decoder = decoder
+        self.queue = DispatchQueue(label: "com.PokeList.PokeApiQueue")
+        self.semaphore = DispatchSemaphore(value: 0)
     }
 
     // MARK: - Protocol methods
 
     func fetchNextPage(completion: @escaping ([RequestData], Int) -> Void) {
-        fetchApiResponse { self.fetchDetails(completion: completion) }
+        queue.async {
+            self.fetchApiResponse { self.fetchDetails(completion: completion) }
+            self.semaphore.wait()
+        }
     }
 
     // MARK: - Helper methods
@@ -87,6 +95,7 @@ final class PokeApiService<T: PokeApiData>: PokeApiServiceProtocol {
 
         dispatchGroup.notify(queue: .global()) {
             completion(pokemonList.sorted { $0.id < $1.id }, latestResponse.count)
+            self.semaphore.signal()
         }
     }
 }
