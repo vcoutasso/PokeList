@@ -70,7 +70,7 @@ final class PokemonListViewController: UIViewController {
 
     // MARK: - Private methods
 
-    @objc private func requestData() {
+    private func requestData() {
         presenter.fetchDataRequested()
     }
 }
