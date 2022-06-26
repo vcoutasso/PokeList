@@ -1,23 +1,25 @@
 import Foundation
 
 protocol PokemonListPresentationLogic: AnyObject {
+    associatedtype ServiceType: PokeApiServiceProtocol
+
     var displayLogicDelegate: PokemonListDisplayLogic? { get }
-    var remoteService: PokeApiService<Pokemon> { get }
+    var remoteService: ServiceType { get }
 
     func fetchDataRequested()
 
     func registerDisplayLogicDelegate(_ delegate: PokemonListDisplayLogic)
 }
 
-final class PokemonListPresenter: PokemonListPresentationLogic {
+final class PokemonListPresenter<PokeApiServiceType: PokeApiServiceProtocol>: PokemonListPresentationLogic where PokeApiServiceType.RequestData == Pokemon {
     // MARK: - Protocol properties
 
     weak var displayLogicDelegate: PokemonListDisplayLogic?
-    let remoteService: PokeApiService<Pokemon>
+    let remoteService: PokeApiServiceType
 
     // MARK: - Initialization
 
-    init(remoteService: PokeApiService<Pokemon>) {
+    init(remoteService: PokeApiServiceType) {
         self.remoteService = remoteService
     }
 

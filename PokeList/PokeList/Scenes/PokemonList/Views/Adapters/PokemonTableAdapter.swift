@@ -1,36 +1,26 @@
 import Foundation
 import UIKit
 
-protocol TableViewAdapter: UITableViewDataSource, UITableViewDelegate {
-    associatedtype DataType: PokeApiData
-
-    var pokemons: [DataType] { get }
-    var prefetchRequest: (() -> Void)? { get }
-
-    func populateAndGetIndexPathsToReload(with newData: [DataType], totalItemCount: Int) -> [IndexPath]?
-    func registerPrefetchCallback(_ callback: @escaping () -> Void)
-}
-
 final class PokemonTableAdapter: NSObject, TableViewAdapter {
     // MARK: - Protocol properties
 
-    private(set) var pokemons: [Pokemon]
+    private(set) var dataItems: [Pokemon]
     private(set) var totalItemCount: Int
     private(set) var prefetchRequest: (() -> Void)?
 
     // MARK: - Initialization
 
     init(pokemons: [Pokemon] = [], totalItemCount: Int = 0) {
-        self.pokemons = pokemons
+        self.dataItems = pokemons
         self.totalItemCount = totalItemCount
     }
 
     // MARK: - Protocol methods
 
     func populateAndGetIndexPathsToReload(with newData: [Pokemon], totalItemCount: Int) -> [IndexPath]? {
-        let indexPathsToReload = pokemons.isEmpty ? nil : calculateIndexPathsToReload(from: newData)
+        let indexPathsToReload = dataItems.isEmpty ? nil : calculateIndexPathsToReload(from: newData)
 
-        pokemons.append(contentsOf: newData)
+        dataItems.append(contentsOf: newData)
         self.totalItemCount = totalItemCount
 
         return indexPathsToReload
@@ -64,7 +54,7 @@ final class PokemonTableAdapter: NSObject, TableViewAdapter {
         if isLoadingCell(for: indexPath) {
             cell.setup(pokemon: nil)
         } else {
-            let pokemon = pokemons[indexPath.row]
+            let pokemon = dataItems[indexPath.row]
             cell.setup(pokemon: pokemon)
         }
 
@@ -75,24 +65,22 @@ final class PokemonTableAdapter: NSObject, TableViewAdapter {
         tableView.deselectRow(at: indexPath, animated: true)
     }
 
-    // MARK: - Private methods
-
-    private func calculateIndexPathsToReload(from newPokemons: [Pokemon]) -> [IndexPath] {
-        let startIndex = pokemons.count
-        let endIndex = startIndex + newPokemons.count
-
-        return (startIndex..<endIndex).map { IndexPath(row: $0, section: 0) }
-    }
-}
-
-extension PokemonTableAdapter: UITableViewDataSourcePrefetching {
     func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
         if indexPaths.contains(where: isLoadingCell) {
             prefetchRequest?()
         }
     }
 
+    // MARK: - Private methods
+
+    private func calculateIndexPathsToReload(from newPokemons: [Pokemon]) -> [IndexPath] {
+        let startIndex = dataItems.count
+        let endIndex = startIndex + newPokemons.count
+
+        return (startIndex..<endIndex).map { IndexPath(row: $0, section: 0) }
+    }
+
     private func isLoadingCell(for indexPath: IndexPath) -> Bool {
-        indexPath.row >= pokemons.count
+        indexPath.row >= dataItems.count
     }
 }

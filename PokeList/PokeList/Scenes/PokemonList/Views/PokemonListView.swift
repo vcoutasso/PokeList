@@ -1,8 +1,16 @@
 import Foundation
 import UIKit
 
-final class PokemonListView: CodedView {
+protocol PokemonListViewProtocol {
+    var tableView: UITableView { get }
+
+    func reloadRows(at indexPaths: [IndexPath])
+    func reloadData()
+}
+
+final class PokemonListView: CodedView, PokemonListViewProtocol {
     // MARK: - Subviews
+
     lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false

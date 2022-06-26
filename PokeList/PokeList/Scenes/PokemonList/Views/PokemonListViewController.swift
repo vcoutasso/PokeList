@@ -4,17 +4,17 @@ protocol PokemonListDisplayLogic: AnyObject {
     func displayPokemons(_ pokemons: [Pokemon], pokemonCount: Int)
 }
 
-final class PokemonListViewController: UIViewController {
+final class PokemonListViewController<PresenterType: PokemonListPresentationLogic, AdapterType: TableViewAdapter>: UIViewController where AdapterType.DataType == Pokemon {
 
     // MARK: - Dependencies
 
-    private let presenter: PokemonListPresentationLogic
-    private let adapter: PokemonTableAdapter
+    private let presenter: PresenterType
+    private let adapter: AdapterType
 
     // MARK: - Private properties
 
-    private var pokemonListView: PokemonListView? {
-        view as? PokemonListView
+    private var pokemonListView: PokemonListViewProtocol? {
+        view as? PokemonListViewProtocol
     }
 
     private lazy var loadingIndicatorView: UIActivityIndicatorView = {
@@ -28,10 +28,12 @@ final class PokemonListViewController: UIViewController {
 
     // MARK: - Initialization
 
-    init(presenter: PokemonListPresentationLogic, adapter: PokemonTableAdapter) {
+    init(presenter: PresenterType, adapter: AdapterType) {
         self.presenter = presenter
         self.adapter = adapter
         super.init(nibName: nil, bundle: nil)
+
+        self.presenter.registerDisplayLogicDelegate(self)
 
         adapter.registerPrefetchCallback { [weak self] in
             self?.requestData()
