@@ -15,10 +15,6 @@ final class PokemonListPresenter: PokemonListPresentationLogic {
     weak var displayLogicDelegate: PokemonListDisplayLogic?
     let remoteService: PokeApiService<Pokemon>
 
-    // MARK: - Private properties
-
-    private var pokemons: [Pokemon] = []
-
     // MARK: - Initialization
 
     init(remoteService: PokeApiService<Pokemon>) {
@@ -30,10 +26,8 @@ final class PokemonListPresenter: PokemonListPresentationLogic {
     func fetchDataRequested() {
         remoteService.fetchNextPage { [weak self] pokemonPage, pokemonCount in
             guard let self = self else { return }
-            self.pokemons.append(contentsOf: pokemonPage)
-            
             DispatchQueue.main.async {
-                self.displayLogicDelegate?.displayPokemons(self.pokemons, pokemonCount: pokemonCount)
+                self.displayLogicDelegate?.displayPokemons(pokemonPage, pokemonCount: pokemonCount)
             }
         }
     }

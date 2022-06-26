@@ -30,7 +30,7 @@ final class PokeApiService<T: PokeApiData>: PokeApiServiceProtocol {
     init(endpointUrl: URL, decoder: JSONDecoder) {
         self.endpointUrl = endpointUrl
         self.decoder = decoder
-        self.queue = DispatchQueue(label: "com.PokeList.PokeApiQueue")
+        self.queue = DispatchQueue(label: "com.vcoutasso.PokeList.PokeApiQueue")
         self.semaphore = DispatchSemaphore(value: 0)
     }
 

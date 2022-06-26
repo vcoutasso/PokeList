@@ -22,6 +22,10 @@ final class PokemonListView: CodedView {
 
     // MARK: - Public methods
 
+    func reloadRows(at indexPaths: [IndexPath]) {
+        tableView.reloadRows(at: indexPaths, with: .automatic)
+    }
+
     func reloadData() {
         tableView.reloadData()
     }

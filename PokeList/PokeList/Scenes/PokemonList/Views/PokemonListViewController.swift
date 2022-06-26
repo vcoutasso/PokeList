@@ -17,7 +17,14 @@ final class PokemonListViewController: UIViewController {
         view as? PokemonListView
     }
 
-    private var refreshControl: UIRefreshControl?
+    private lazy var loadingIndicatorView: UIActivityIndicatorView = {
+        let view = UIActivityIndicatorView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.hidesWhenStopped = true
+        view.startAnimating()
+
+        return view
+    }()
 
     // MARK: - Initialization
 
@@ -42,6 +49,13 @@ final class PokemonListViewController: UIViewController {
         super.loadView()
 
         view = PokemonListView(delegate: adapter, dataSource: adapter, prefetchDataSource: adapter)
+
+        view.addSubview(loadingIndicatorView)
+
+        NSLayoutConstraint.activate([
+            loadingIndicatorView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            loadingIndicatorView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+        ])
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -63,7 +77,14 @@ final class PokemonListViewController: UIViewController {
 
 extension PokemonListViewController: PokemonListDisplayLogic {
     func displayPokemons(_ pokemons: [Pokemon], pokemonCount: Int) {
-        adapter.populate(items: pokemons, total: pokemonCount)
-        pokemonListView?.reloadData()
+        guard let pokemonListView = pokemonListView,
+              let newIndexPaths = adapter.populateAndGetIndexPathsToReload(with: pokemons, totalItemCount: pokemonCount) else {
+            loadingIndicatorView.stopAnimating()
+            pokemonListView?.reloadData()
+            return
+        }
+
+        let indexPathsToReload = adapter.visibleIndexPathsToReload(pokemonListView.tableView, intersecting: newIndexPaths)
+        pokemonListView.reloadRows(at: indexPathsToReload)
     }
 }
