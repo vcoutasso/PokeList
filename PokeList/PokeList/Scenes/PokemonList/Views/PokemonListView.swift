@@ -12,20 +12,23 @@ final class PokemonListView: CodedView, PokemonListViewProtocol {
     // MARK: - Subviews
 
     lazy var tableView: UITableView = {
-        let tableView = UITableView()
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.register(PokemonTableViewCell.self)
-
-        return tableView
+        UITableView()
     }()
 
     // MARK: - Initialization
 
-    init(delegate: UITableViewDelegate, dataSource: UITableViewDataSource, prefetchDataSource: UITableViewDataSourcePrefetching) {
+    init(delegate: UITableViewDelegate, dataSource: UITableViewDataSource, prefetchDataSource: UITableViewDataSourcePrefetching, tableView: UITableView? = nil) {
         super.init(frame: .zero)
-        tableView.delegate = delegate
-        tableView.dataSource = dataSource
-        tableView.prefetchDataSource = prefetchDataSource
+        guard let tableView = tableView else { return }
+
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.register(PokemonTableViewCell.self)
+
+        self.tableView = tableView
+        self.tableView.delegate = delegate
+        self.tableView.dataSource = dataSource
+        self.tableView.prefetchDataSource = prefetchDataSource
+
     }
 
     // MARK: - Public methods
