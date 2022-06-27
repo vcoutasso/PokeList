@@ -24,4 +24,4 @@ jobs:
         run : xcodebuild test -scheme PokeList -destination "platform=iOS Simulator,OS\=15.5,name\=iPhone 8" | xcpretty
 
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v1.2.1
+        uses: codecov/codecov-action@v2
