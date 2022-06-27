@@ -1,7 +1,9 @@
 import Foundation
 
 final class PokemonServiceFactory: PokeApiServiceFactory {
-    private init() {}
+    private init() {
+        // This class should not be instantiated and is only used to access its static methods
+    }
     
     static func create() -> PokeApiService<Pokemon> {
         var components = URLComponents()
