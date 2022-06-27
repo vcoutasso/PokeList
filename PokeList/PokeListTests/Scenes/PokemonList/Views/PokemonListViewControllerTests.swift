@@ -25,7 +25,7 @@ class PokemonListViewControllerTests: XCTestCase {
 
     // MARK: - Tests
 
-    func test_sutShouldRegisterDisplayLogicDelegate() {
+    func testSutShouldRegisterDisplayLogicDelegate() {
         // Given / When
         loadView()
 
@@ -33,7 +33,7 @@ class PokemonListViewControllerTests: XCTestCase {
         XCTAssert(presentationLogicSpy.registerDisplayLogicDelegateCalled)
     }
 
-    func test_sutShouldRegisterPrefetchCallback() {
+    func testSutShouldRegisterPrefetchCallback() {
         // Given / When
         loadView()
 
@@ -41,7 +41,7 @@ class PokemonListViewControllerTests: XCTestCase {
         XCTAssert(pokemonTableAdapterSpy.registerPrefetchCallbackCalled)
     }
 
-    func test_viewDidLoadShouldRequestDataFromPresenter() {
+    func testViewDidLoadShouldRequestDataFromPresenter() {
         // Given
         loadView()
 
@@ -52,7 +52,7 @@ class PokemonListViewControllerTests: XCTestCase {
         XCTAssert(presentationLogicSpy.fetchDataRequestedCalled)
     }
 
-    func test_displayPokemonsShouldPopulateTableAdapter() {
+    func testDisplayPokemonsShouldPopulateTableAdapter() {
         // Given / When
         sut.displayPokemons([], pokemonCount: 0)
 
@@ -60,7 +60,7 @@ class PokemonListViewControllerTests: XCTestCase {
         XCTAssert(pokemonTableAdapterSpy.populateAndGetIndexPathsToReloadCalled)
     }
 
-    func test_displayPokemonsShouldReloadDataWhenIndexPathsToReloadIsNil() {
+    func testDisplayPokemonsShouldReloadDataWhenIndexPathsToReloadIsNil() {
         // Given
         sut.view = tableViewSpy
         pokemonTableAdapterSpy.populateAndGetIndexPathsToReloadStub = nil
@@ -72,7 +72,7 @@ class PokemonListViewControllerTests: XCTestCase {
         XCTAssert(tableViewSpy.reloadDataCalled)
     }
 
-    func test_displayPokemonsShouldCalculateVisibleIndexPathsToReloadWhenIndexPathToReloadIsNotNil() {
+    func testDisplayPokemonsShouldCalculateVisibleIndexPathsToReloadWhenIndexPathToReloadIsNotNil() {
         // Given
         pokemonTableAdapterSpy.populateAndGetIndexPathsToReloadStub = []
 
@@ -83,7 +83,7 @@ class PokemonListViewControllerTests: XCTestCase {
         XCTAssert(pokemonTableAdapterSpy.visibleIndexPathsToReloadCalled)
     }
 
-    func test_displayPokemonsShouldReloadRowsWhenIndexPathToReloadIsNotNil() {
+    func testDisplayPokemonsShouldReloadRowsWhenIndexPathToReloadIsNotNil() {
         // Given
         sut.view = tableViewSpy
         pokemonTableAdapterSpy.populateAndGetIndexPathsToReloadStub = []
