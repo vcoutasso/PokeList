@@ -26,18 +26,18 @@ class PokemonListViewControllerTests: XCTestCase {
     // MARK: - Tests
 
     func test_sutShouldRegisterDisplayLogicDelegate() {
-        // Given
+        // Given / When
         loadView()
 
-        // When / Then
+        // Then
         XCTAssert(presentationLogicSpy.registerDisplayLogicDelegateCalled)
     }
 
     func test_sutShouldRegisterPrefetchCallback() {
-        // Given
+        // Given / When
         loadView()
 
-        // When / Then
+        // Then
         XCTAssert(pokemonTableAdapterSpy.registerPrefetchCallbackCalled)
     }
 
