@@ -11,8 +11,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let windowScene = (scene as? UIWindowScene) else { return }
 
+        let service = PokemonServiceFactory.create()
+        let presenter = PokemonListPresenter(remoteService: service)
+        let adapter = PokemonTableAdapter()
+        let rootViewController = PokemonListViewController(presenter: presenter, adapter: adapter)
+
         window = UIWindow(windowScene: windowScene)
-        window?.rootViewController = PokemonListViewController()
+        window?.rootViewController = rootViewController
         window?.makeKeyAndVisible()
     }
 

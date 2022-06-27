@@ -1,0 +1,27 @@
+name: Tests
+
+on:
+  pull_request:
+    branches:
+      - master
+      - develop
+
+jobs:
+  unit:
+    runs-on: macos-12
+    name: Unit tests
+    steps: 
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Select Xcode
+        run: sudo xcode-select -switch /Applications/Xcode_13.4.app && /usr/bin/xcodebuild -version
+
+      - name: Run unit tests
+        run : xcodebuild test -project PokeList/PokeList.xcodeproj -scheme PokeListTests -destination "platform=iOS Simulator,OS=15.5,name=iPhone 8" -enableCodeCoverage YES | xcpretty
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          working-directory: ./PokeList
+          flags: unittests

@@ -1,35 +1,57 @@
 import Foundation
 
 protocol PokeApiServiceProtocol {
-    associatedtype RequestData: PokeApiDataProtocol
+    associatedtype RequestData: PokeApiData
 
     var endpointUrl: URL { get }
     var decoder: JSONDecoder { get }
 
-    func fetchNextPage(completion: @escaping ([RequestData]) -> Void)
+    func fetchNextPage(completion: @escaping ([RequestData], Int) -> Void)
 }
 
-final class PokeApiService<T: PokeApiDataProtocol>: PokeApiServiceProtocol {
+final class PokeApiService<T: PokeApiData>: PokeApiServiceProtocol {
     typealias RequestData = T
-    
-    private var currentResponse: PokeApiResponse?
+
+    // MARK: - Protocol properties
 
     let endpointUrl: URL
     let decoder: JSONDecoder
 
+    // MARK: - Private properties
+
+    private var currentResponse: PokeApiResponse?
+    private var lastRequestURL: URL?
+
+    private let queue: DispatchQueue
+    private let semaphore: DispatchSemaphore
+
+    // MARK: - Inialization
+
     init(endpointUrl: URL, decoder: JSONDecoder) {
         self.endpointUrl = endpointUrl
         self.decoder = decoder
+        self.queue = DispatchQueue(label: "com.vcoutasso.PokeList.PokeApiQueue")
+        self.semaphore = DispatchSemaphore(value: 0)
     }
 
-    func fetchNextPage(completion: @escaping ([RequestData]) -> Void) {
-        fetchApiResponse { self.fetchDetails(completion: completion) }
+    // MARK: - Protocol methods
+
+    func fetchNextPage(completion: @escaping ([RequestData], Int) -> Void) {
+        queue.async {
+            self.fetchApiResponse { self.fetchDetails(completion: completion) }
+            self.semaphore.wait()
+        }
     }
+
+    // MARK: - Helper methods
 
     private func fetchApiResponse(completion: @escaping () -> Void) {
         guard currentResponse == nil || currentResponse?.next != nil,
-              let url = currentResponse?.next == nil ? endpointUrl : URL(string: (currentResponse?.next)!)
+              let url = currentResponse?.next == nil ? endpointUrl : URL(string: (currentResponse?.next)!),
+              lastRequestURL == nil || lastRequestURL != url
         else { return }
+
+        lastRequestURL = url
 
         let dataTask = URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
             guard error == nil,
@@ -45,7 +67,7 @@ final class PokeApiService<T: PokeApiDataProtocol>: PokeApiServiceProtocol {
         dataTask.resume()
     }
 
-    private func fetchDetails(completion: @escaping ([RequestData]) -> Void) {
+    private func fetchDetails(completion: @escaping ([RequestData], Int) -> Void) {
         guard let latestResponse = currentResponse else { return }
 
         var pokemonList = [RequestData]()
@@ -72,7 +94,8 @@ final class PokeApiService<T: PokeApiDataProtocol>: PokeApiServiceProtocol {
         }
 
         dispatchGroup.notify(queue: .global()) {
-            completion(pokemonList.sorted { $0.id < $1.id })
+            completion(pokemonList.sorted { $0.id < $1.id }, latestResponse.count)
+            self.semaphore.signal()
         }
     }
 }
