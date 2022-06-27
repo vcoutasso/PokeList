@@ -1,8 +1,9 @@
-//
-//  PokemonListDisplayLogicSpy.swift
-//  PokeListTests
-//
-//  Created by Vinícius Couto on 26/06/22.
-//
+import XCTest
+@testable import PokeList
 
-import Foundation
+final class PokemonListDisplayLogicSpy: PokemonListDisplayLogic {
+    private(set) var displayPokemonsCalled = false
+    func displayPokemons(_ pokemons: [Pokemon], pokemonCount: Int) {
+        displayPokemonsCalled = true
+    }
+}

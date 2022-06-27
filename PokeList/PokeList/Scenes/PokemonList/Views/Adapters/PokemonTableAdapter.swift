@@ -71,7 +71,7 @@ final class PokemonTableAdapter: NSObject, TableViewAdapter {
         }
     }
 
-    // MARK: - Private methods
+    // MARK: - Helper methods
 
     private func calculateIndexPathsToReload(from newPokemons: [Pokemon]) -> [IndexPath] {
         let startIndex = dataItems.count

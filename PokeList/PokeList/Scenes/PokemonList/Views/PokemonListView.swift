@@ -19,16 +19,16 @@ final class PokemonListView: CodedView, PokemonListViewProtocol {
 
     init(delegate: UITableViewDelegate, dataSource: UITableViewDataSource, prefetchDataSource: UITableViewDataSourcePrefetching, tableView: UITableView? = nil) {
         super.init(frame: .zero)
-        guard let tableView = tableView else { return }
+        if let tableView = tableView {
+            self.tableView = tableView
+        }
 
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.register(PokemonTableViewCell.self)
+        self.tableView.translatesAutoresizingMaskIntoConstraints = false
+        self.tableView.register(PokemonTableViewCell.self)
 
-        self.tableView = tableView
         self.tableView.delegate = delegate
         self.tableView.dataSource = dataSource
         self.tableView.prefetchDataSource = prefetchDataSource
-
     }
 
     // MARK: - Public methods

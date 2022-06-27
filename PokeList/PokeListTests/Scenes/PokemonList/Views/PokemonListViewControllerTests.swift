@@ -1,7 +1,7 @@
 @testable import PokeList
 import XCTest
 
-class PokemonListViewControllerTests: XCTestCase {
+final class PokemonListViewControllerTests: XCTestCase {
     // MARK: - Properties
 
     private let window = UIWindow()
