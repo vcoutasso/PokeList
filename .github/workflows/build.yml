@@ -1,0 +1,24 @@
+name: Build
+
+on: 
+  pull_request:
+    branches:
+      - master
+      - develop
+
+jobs:
+  build:
+    runs-on: macos-12.0
+    name: Build
+    steps: 
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Select Xcode
+        run: sudo xcode-select -switch /Applications/Xcode_13.4.app && /usr/bin/xcodebuild -version
+
+      - name: Change working directory
+        run: cd PokeList
+
+      - name: Build project
+        run : xcodebuild build -scheme PokeList -destination "platform=iOS Simulator,OS=15.5,name=iPhone 8" | xcpretty
