@@ -58,6 +58,20 @@ final class PokemonTableViewCell: CodedTableViewCell, ReusableView {
         return view
     }()
 
+    // MARK: - Properties
+
+    private(set) var isLoading: Bool = true {
+        didSet {
+            if isLoading {
+                loadingIndicatorView.startAnimating()
+                stackView.isHidden = true
+            } else {
+                loadingIndicatorView.stopAnimating()
+                stackView.isHidden = false
+            }
+        }
+    }
+
     // MARK: - View lifecycle
 
     override func addSubviews() {
@@ -81,16 +95,14 @@ final class PokemonTableViewCell: CodedTableViewCell, ReusableView {
 
     func setup(pokemon: Pokemon?) {
         if let pokemon = pokemon {
-            loadingIndicatorView.stopAnimating()
-            stackView.isHidden = false
-
             idLabel.text = String(pokemon.id)
             nameLabel.text = pokemon.name
             heightLabel.text = String(pokemon.height)
             weightLabel.text = String(pokemon.weight)
+
+            isLoading = false
         } else {
-            stackView.isHidden = true
-            loadingIndicatorView.startAnimating()
+            isLoading = true
         }
     }
 }

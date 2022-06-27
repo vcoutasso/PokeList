@@ -62,6 +62,7 @@ final class PokemonTableAdapterTests: XCTestCase {
         let initialPokemons = [Fixtures.Pokemons.bulbasaur]
         let newPokemons = [Fixtures.Pokemons.charmander, Fixtures.Pokemons.squirtle]
         let totalCount = Fixtures.Pokemons.threeStarters.count
+
         _ = sut.populateAndGetIndexPathsToReload(with: initialPokemons, totalItemCount: totalCount)
 
         let expectedResult: [IndexPath] = [IndexPath(row: 1, section: 0), IndexPath(row: 2, section: 0)]
@@ -71,5 +72,96 @@ final class PokemonTableAdapterTests: XCTestCase {
 
         // Then
         XCTAssertEqual(result, expectedResult)
+    }
+
+    // TODO: Test for when rows are visibile still missing
+    func testVisibleIndexPathsToReloadShouldReturnEmptyArrayWhenRowsAreNotVisible() {
+        // Given
+        let tableView = UITableView()
+        let firstRow = IndexPath(row: .zero, section: .zero)
+        let expectedResult: [IndexPath] = []
+
+        // When
+        let visibleIndexPathsToReload = sut.visibleIndexPathsToReload(tableView, intersecting: [firstRow])
+
+        // Then
+        XCTAssertEqual(visibleIndexPathsToReload, expectedResult)
+    }
+
+    func testTableViewPrefetchRowsAtShouldCallPrefetchRequestWhenCellIsLoading() {
+        // Given
+        let tableView = UITableView()
+        let expectation = XCTestExpectation()
+
+        sut.registerPrefetchCallback {
+            expectation.fulfill()
+        }
+
+        let indexPath = IndexPath(row: 0, section: 0)
+
+        // When
+        sut.tableView(tableView, prefetchRowsAt: [indexPath])
+
+        // Then
+        wait(for: [expectation], timeout: 1)
+    }
+
+    func testTableViewPrefetchRowsAtShouldNotCallPrefetchRequestWhenCellIsNotLoading() {
+        // Given
+        let tableView = UITableView()
+        let expectation = XCTestExpectation()
+        expectation.isInverted = true
+
+        sut.registerPrefetchCallback {
+            expectation.fulfill()
+        }
+
+        let items = Fixtures.Pokemons.threeStarters
+
+        _ = sut.populateAndGetIndexPathsToReload(with: items, totalItemCount: items.count)
+
+        let indexPath = IndexPath(row: 0, section: 0)
+
+        // When
+        sut.tableView(tableView, prefetchRowsAt: [indexPath])
+
+        // Then
+        wait(for: [expectation], timeout: 1)
+    }
+
+    func testTableViewCellForRowAtShouldSetLoadingCellWhenLoadingData() {
+        // Given
+        let tableView = UITableView()
+        tableView.register(PokemonTableViewCell.self)
+        let indexPath = IndexPath(row: 0, section: 0)
+
+        // When
+        guard let cell = sut.tableView(tableView, cellForRowAt: indexPath) as? PokemonTableViewCell else {
+            XCTFail()
+            return
+        }
+
+        // Then
+        XCTAssert(cell.isLoading)
+    }
+
+    func testTableViewCellForRowAtShouldSetCellWhenDataIsAvailable() {
+        // Given
+        let tableView = UITableView()
+        tableView.register(PokemonTableViewCell.self)
+        let indexPath = IndexPath(row: 0, section: 0)
+
+        let items = Fixtures.Pokemons.threeStarters
+
+        _ = sut.populateAndGetIndexPathsToReload(with: items, totalItemCount: items.count)
+
+        // When
+        guard let cell = sut.tableView(tableView, cellForRowAt: indexPath) as? PokemonTableViewCell else {
+            XCTFail()
+            return
+        }
+
+        // Then
+        XCTAssertFalse(cell.isLoading)
     }
 }
