@@ -33,11 +33,13 @@ final class PokemonListViewController<PresenterType: PokemonListPresentationLogi
         self.adapter = adapter
         super.init(nibName: nil, bundle: nil)
 
-        self.presenter.registerDisplayLogicDelegate(self)
+        presenter.registerDisplayLogicDelegate(self)
 
         adapter.registerPrefetchCallback { [weak self] in
             self?.requestData()
         }
+
+        title = "Pokémons"
     }
 
     @available(*, unavailable)
@@ -58,10 +60,6 @@ final class PokemonListViewController<PresenterType: PokemonListPresentationLogi
             loadingIndicatorView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             loadingIndicatorView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
         ])
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
     }
 
     override func viewDidLoad() {
