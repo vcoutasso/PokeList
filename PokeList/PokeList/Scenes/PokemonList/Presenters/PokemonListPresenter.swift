@@ -33,7 +33,7 @@ final class PokemonListPresenter<PokeApiServiceType: PokeApiServiceProtocol>: Po
         remoteService.fetchNextPage { [weak self] pokemonPage, pokemonCount in
             guard let self = self else { return }
             DispatchQueue.main.async {
-                self.displayLogicDelegate?.displayPokemons(pokemonPage, pokemonCount: pokemonCount)
+                self.displayLogicDelegate?.displayPokemons(pokemonPage.sorted { $0.id < $1.id }, pokemonCount: pokemonCount)
             }
         }
     }

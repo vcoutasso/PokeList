@@ -38,14 +38,14 @@ final class PokeApiService<T: PokeApiData>: PokeApiServiceProtocol {
 
     func fetchNextPage(completion: @escaping ([RequestData], Int) -> Void) {
         queue.async {
-            self.fetchApiResponse { self.fetchDetails(completion: completion) }
+            self.fetchApiResponse { self.fetchDetails(response: $0, completion: completion) }
             self.semaphore.wait()
         }
     }
 
     // MARK: - Helper methods
 
-    private func fetchApiResponse(completion: @escaping () -> Void) {
+    private func fetchApiResponse(completion: @escaping (PokeApiResponse) -> Void) {
         guard currentResponse == nil || currentResponse?.next != nil,
               let url = currentResponse?.next == nil ? endpointUrl : URL(string: (currentResponse?.next)!),
               lastRequestURL == nil || lastRequestURL != url
@@ -61,19 +61,20 @@ final class PokeApiService<T: PokeApiData>: PokeApiServiceProtocol {
             else { return }
 
             self.currentResponse = result
-            completion()
+            completion(result)
+            self.semaphore.signal()
         }
 
         dataTask.resume()
     }
 
-    private func fetchDetails(completion: @escaping ([RequestData], Int) -> Void) {
+    private func fetchDetails(response: PokeApiResponse, completion: @escaping ([RequestData], Int) -> Void) {
         guard let latestResponse = currentResponse else { return }
 
         var pokemonList = [RequestData]()
         let dispatchGroup = DispatchGroup()
 
-        for pokemonInfo in latestResponse.results {
+        for pokemonInfo in response.results {
             guard let url = URL(string: pokemonInfo.url) else { continue }
 
             dispatchGroup.enter()
@@ -94,8 +95,7 @@ final class PokeApiService<T: PokeApiData>: PokeApiServiceProtocol {
         }
 
         dispatchGroup.notify(queue: .global()) {
-            completion(pokemonList.sorted { $0.id < $1.id }, latestResponse.count)
-            self.semaphore.signal()
+            completion(pokemonList, latestResponse.count)
         }
     }
 }
