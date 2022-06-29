@@ -18,4 +18,10 @@ final class PokemonListPresentationLogicSpy<PokeApiServiceType: PokeApiServicePr
     func registerDisplayLogicDelegate(_ delegate: PokemonListDisplayLogic) {
         registerDisplayLogicDelegateCalled = true
     }
+
+    private(set) var showPokemonDetailRequested = false
+    func showPokemonDetailRequested(for pokemon: Pokemon) {
+        showPokemonDetailRequested = false
+    }
+
 }

@@ -8,6 +8,10 @@ final class PokemonTableAdapter: NSObject, TableViewAdapter {
     private(set) var totalItemCount: Int
     private(set) var prefetchRequest: (() -> Void)?
 
+    // MARK: - Properties
+
+    private weak var displayLogicDelegate: PokemonListDisplayLogic?
+
     // MARK: - Initialization
 
     init(pokemons: [Pokemon] = [], totalItemCount: Int = 0) {
@@ -38,6 +42,12 @@ final class PokemonTableAdapter: NSObject, TableViewAdapter {
         return Array(indexPathsIntersection)
     }
 
+    // MARK: - Helper methods
+
+    func registerDisplayLogicDelegate(_ delegate: PokemonListDisplayLogic) {
+        self.displayLogicDelegate = delegate
+    }
+
     // MARK: - Table view adapter methods
 
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -63,6 +73,9 @@ final class PokemonTableAdapter: NSObject, TableViewAdapter {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        if !isLoadingCell(for: indexPath) {
+            displayLogicDelegate?.displayPokemonDetail(dataItems[indexPath.row])
+        }
     }
 
     func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {

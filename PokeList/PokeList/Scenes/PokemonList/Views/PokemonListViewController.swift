@@ -1,15 +1,16 @@
 import UIKit
 
-protocol PokemonListDisplayLogic: AnyObject {
+protocol PokemonListDisplayLogic: AnyObject  {
     func displayPokemons(_ pokemons: [Pokemon], pokemonCount: Int)
+    func displayPokemonDetail(_ pokemon: Pokemon)
 }
 
-final class PokemonListViewController<PresenterType: PokemonListPresentationLogic, AdapterType: TableViewAdapter>: UIViewController where AdapterType.DataType == Pokemon {
+final class PokemonListViewController<PresenterWrapper: PokemonListPresentationLogic, AdapterWrapper: TableViewAdapter>: UIViewController where AdapterWrapper.DataWrapper == Pokemon, AdapterWrapper.DisplayLogicWrapper == PokemonListDisplayLogic {
 
     // MARK: - Dependencies
 
-    private let presenter: PresenterType
-    private let adapter: AdapterType
+    private let presenter: PresenterWrapper
+    private let adapter: AdapterWrapper
 
     // MARK: - Private properties
 
@@ -28,16 +29,19 @@ final class PokemonListViewController<PresenterType: PokemonListPresentationLogi
 
     // MARK: - Initialization
 
-    init(presenter: PresenterType, adapter: AdapterType) {
+    init(presenter: PresenterWrapper, adapter: AdapterWrapper) {
         self.presenter = presenter
         self.adapter = adapter
         super.init(nibName: nil, bundle: nil)
 
-        self.presenter.registerDisplayLogicDelegate(self)
+        presenter.registerDisplayLogicDelegate(self)
+        adapter.registerDisplayLogicDelegate(self)
 
         adapter.registerPrefetchCallback { [weak self] in
             self?.requestData()
         }
+
+        title = "Pokémons"
     }
 
     @available(*, unavailable)
@@ -58,10 +62,6 @@ final class PokemonListViewController<PresenterType: PokemonListPresentationLogi
             loadingIndicatorView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             loadingIndicatorView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
         ])
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
     }
 
     override func viewDidLoad() {
@@ -88,5 +88,9 @@ extension PokemonListViewController: PokemonListDisplayLogic {
 
         let indexPathsToReload = adapter.visibleIndexPathsToReload(pokemonListView.tableView, intersecting: newIndexPaths)
         pokemonListView.reloadRows(at: indexPathsToReload)
+    }
+
+    func displayPokemonDetail(_ pokemon: Pokemon) {
+        presenter.showPokemonDetailRequested(for: pokemon)
     }
 }

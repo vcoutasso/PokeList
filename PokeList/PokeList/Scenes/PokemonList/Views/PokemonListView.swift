@@ -19,6 +19,7 @@ final class PokemonListView: CodedView, PokemonListViewProtocol {
 
     init(delegate: UITableViewDelegate, dataSource: UITableViewDataSource, prefetchDataSource: UITableViewDataSourcePrefetching, tableView: UITableView? = nil) {
         super.init(frame: .zero)
+        
         if let tableView = tableView {
             self.tableView = tableView
         }
@@ -29,6 +30,9 @@ final class PokemonListView: CodedView, PokemonListViewProtocol {
         self.tableView.delegate = delegate
         self.tableView.dataSource = dataSource
         self.tableView.prefetchDataSource = prefetchDataSource
+
+        // This view will be the roow view of a view controller, so we must keep this set to true
+        self.translatesAutoresizingMaskIntoConstraints = true
     }
 
     // MARK: - Public methods

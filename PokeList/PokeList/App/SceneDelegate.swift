@@ -11,14 +11,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let windowScene = (scene as? UIWindowScene) else { return }
 
-        let service = PokemonServiceFactory.create()
-        let presenter = PokemonListPresenter(remoteService: service)
-        let adapter = PokemonTableAdapter()
-        let rootViewController = PokemonListViewController(presenter: presenter, adapter: adapter)
+        let window = UIWindow(windowScene: windowScene)
+        self.window = window
 
-        window = UIWindow(windowScene: windowScene)
-        window?.rootViewController = rootViewController
-        window?.makeKeyAndVisible()
+        let navigationController = UINavigationController()
+        let appCoordinator = AppCoordinator(window: window, navigationController: navigationController)
+        appCoordinator.start()
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

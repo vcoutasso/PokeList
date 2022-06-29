@@ -8,6 +8,7 @@ final class PokemonListViewControllerTests: XCTestCase {
 
     // MARK: - Test doubles
 
+    private lazy var coordinator = AppCoordinator(window: window, navigationController: UINavigationController())
     private let tableViewSpy = PokemonListViewSpy()
     private let remoteServiceDummy = PokemonApiServiceDummy()
     private lazy var presentationLogicSpy = PokemonListPresentationLogicSpy(remoteService: remoteServiceDummy)
