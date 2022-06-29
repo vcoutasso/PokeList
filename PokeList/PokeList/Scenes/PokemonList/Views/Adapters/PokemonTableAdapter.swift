@@ -73,7 +73,9 @@ final class PokemonTableAdapter: NSObject, TableViewAdapter {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        displayLogicDelegate?.displayPokemonDetail(dataItems[indexPath.row])
+        if !isLoadingCell(for: indexPath) {
+            displayLogicDelegate?.displayPokemonDetail(dataItems[indexPath.row])
+        }
     }
 
     func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
