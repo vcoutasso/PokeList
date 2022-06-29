@@ -95,7 +95,7 @@ final class PokeApiService<T: PokeApiData>: PokeApiServiceProtocol {
         }
 
         dispatchGroup.notify(queue: .global()) {
-            completion(pokemonList, latestResponse.count)
+            completion(pokemonList.sorted { $0.id < $1.id }, latestResponse.count)
         }
     }
 }

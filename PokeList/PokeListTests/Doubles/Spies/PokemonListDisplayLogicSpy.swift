@@ -6,4 +6,10 @@ final class PokemonListDisplayLogicSpy: PokemonListDisplayLogic {
     func displayPokemons(_ pokemons: [Pokemon], pokemonCount: Int) {
         displayPokemonsCalled = true
     }
+
+    private(set) var displayPokemonDetailCalled = false
+    func displayPokemonDetail(_ pokemon: Pokemon) {
+        displayPokemonDetailCalled = true
+    }
+
 }

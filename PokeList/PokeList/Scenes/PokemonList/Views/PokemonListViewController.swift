@@ -1,16 +1,16 @@
 import UIKit
 
-protocol PokemonListDisplayLogic: AnyObject {
+protocol PokemonListDisplayLogic: AnyObject  {
     func displayPokemons(_ pokemons: [Pokemon], pokemonCount: Int)
     func displayPokemonDetail(_ pokemon: Pokemon)
 }
 
-final class PokemonListViewController<PresenterType: PokemonListPresentationLogic, AdapterType: PokemonTableAdapter>: UIViewController {
+final class PokemonListViewController<PresenterWrapper: PokemonListPresentationLogic, AdapterWrapper: TableViewAdapter>: UIViewController where AdapterWrapper.DataWrapper == Pokemon, AdapterWrapper.DisplayLogicWrapper == PokemonListDisplayLogic {
 
     // MARK: - Dependencies
 
-    private let presenter: PresenterType
-    private let adapter: AdapterType
+    private let presenter: PresenterWrapper
+    private let adapter: AdapterWrapper
 
     // MARK: - Private properties
 
@@ -29,7 +29,7 @@ final class PokemonListViewController<PresenterType: PokemonListPresentationLogi
 
     // MARK: - Initialization
 
-    init(presenter: PresenterType, adapter: AdapterType) {
+    init(presenter: PresenterWrapper, adapter: AdapterWrapper) {
         self.presenter = presenter
         self.adapter = adapter
         super.init(nibName: nil, bundle: nil)

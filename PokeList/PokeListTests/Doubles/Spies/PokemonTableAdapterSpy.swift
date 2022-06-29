@@ -2,9 +2,12 @@ import XCTest
 @testable import PokeList
 
 final class PokemonTableAdapterSpy: NSObject, TableViewAdapter {
-    var dataItems: [Pokemon] = []
+    // MARK: - Properties
 
+    var dataItems: [Pokemon] = []
     var prefetchRequest: (() -> Void)?
+
+    // MARK: - Spy methods
 
     var populateAndGetIndexPathsToReloadStub: [IndexPath]? = nil
     private(set) var populateAndGetIndexPathsToReloadCalled = false
@@ -22,6 +25,11 @@ final class PokemonTableAdapterSpy: NSObject, TableViewAdapter {
     func visibleIndexPathsToReload(_ tableView: UITableView, intersecting indexPaths: [IndexPath]) -> [IndexPath] {
         visibleIndexPathsToReloadCalled = true
         return []
+    }
+
+    private(set) var registerDisplayLogicDelegate = false
+    func registerDisplayLogicDelegate(_ delegate: PokemonListDisplayLogic) {
+        registerDisplayLogicDelegate = true
     }
 }
 

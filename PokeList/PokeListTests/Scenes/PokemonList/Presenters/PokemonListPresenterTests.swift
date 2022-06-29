@@ -8,7 +8,7 @@ final class PokemonListPresenterTests: XCTestCase {
 
     // MARK: = Subject under test
 
-    private lazy var sut = PokemonListPresenter(remoteService: remoteServiceSpy)
+    private lazy var sut = PokemonListPresenter(remoteService: remoteServiceSpy, navigationController: UINavigationController())
 
     // MARK: - Tests
 
