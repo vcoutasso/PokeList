@@ -1,7 +1,13 @@
 import Foundation
 import UIKit
 
+protocol PokemonDetailDisplayLogic: AnyObject {}
+
 final class PokemonDetailViewController: UIViewController {
+    // MARK: - Dependencies
+
+    private let presenter: PokemonDetailPresentationLogic
+
     // MARK: - Properties
 
     private let pokemon: Pokemon
@@ -36,9 +42,12 @@ final class PokemonDetailViewController: UIViewController {
 
     // MARK: - Initialization
 
-    init(pokemon: Pokemon) {
+    init(presenter: PokemonDetailPresentationLogic, pokemon: Pokemon) {
+        self.presenter = presenter
         self.pokemon = pokemon
         super.init(nibName: nil, bundle: nil)
+
+        presenter.registerDisplayLogicDelegate(self)
     }
 
     @available(*, unavailable)
@@ -81,3 +90,5 @@ final class PokemonDetailViewController: UIViewController {
         return stack
     }
 }
+
+extension PokemonDetailViewController: PokemonDetailDisplayLogic {}

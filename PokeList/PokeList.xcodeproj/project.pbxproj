@@ -46,6 +46,7 @@
 		4CC5C93C286B9711001C5E4A /* PokemonListFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CC5C93B286B9711001C5E4A /* PokemonListFactory.swift */; };
 		4CC5C940286BABF7001C5E4A /* PokemonListCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CC5C93F286BABF7001C5E4A /* PokemonListCoordinator.swift */; };
 		4CC5C946286BAD89001C5E4A /* PokemonDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CC5C945286BAD89001C5E4A /* PokemonDetailViewController.swift */; };
+		4CC5C94B286BF931001C5E4A /* PokemonDetailPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CC5C94A286BF931001C5E4A /* PokemonDetailPresenter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -109,6 +110,7 @@
 		4CC5C93B286B9711001C5E4A /* PokemonListFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonListFactory.swift; sourceTree = "<group>"; };
 		4CC5C93F286BABF7001C5E4A /* PokemonListCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonListCoordinator.swift; sourceTree = "<group>"; };
 		4CC5C945286BAD89001C5E4A /* PokemonDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonDetailViewController.swift; sourceTree = "<group>"; };
+		4CC5C94A286BF931001C5E4A /* PokemonDetailPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonDetailPresenter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -412,6 +414,8 @@
 		4CC5C943286BAD77001C5E4A /* PokemonDetail */ = {
 			isa = PBXGroup;
 			children = (
+				4CC5C94C286BF995001C5E4A /* Utils */,
+				4CC5C949286BF90E001C5E4A /* Presenters */,
 				4CC5C944286BAD7D001C5E4A /* Views */,
 			);
 			path = PokemonDetail;
@@ -423,6 +427,21 @@
 				4CC5C945286BAD89001C5E4A /* PokemonDetailViewController.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		4CC5C949286BF90E001C5E4A /* Presenters */ = {
+			isa = PBXGroup;
+			children = (
+				4CC5C94A286BF931001C5E4A /* PokemonDetailPresenter.swift */,
+			);
+			path = Presenters;
+			sourceTree = "<group>";
+		};
+		4CC5C94C286BF995001C5E4A /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -567,6 +586,7 @@
 				4C9BD3EB2862AB8A00D89B89 /* PokeApiService.swift in Sources */,
 				4C9FA9112864F623008BC77D /* PokemonListPresenter.swift in Sources */,
 				4C44777D28641C4800E916CE /* PokeApiResultInfo.swift in Sources */,
+				4CC5C94B286BF931001C5E4A /* PokemonDetailPresenter.swift in Sources */,
 				4C9FA92028650734008BC77D /* PokemonTableViewCell.swift in Sources */,
 				4C9BD3B228629DF000D89B89 /* AppDelegate.swift in Sources */,
 				4C9FA919286505DE008BC77D /* PokemonListView.swift in Sources */,

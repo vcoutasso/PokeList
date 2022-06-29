@@ -14,7 +14,8 @@ final class PokemonListCoordinator: Coordinator {
     }
 
     func showPokemonDetail(_ pokemon: Pokemon) {
-        let viewController = PokemonDetailViewController(pokemon: pokemon)
+        let presenter = PokemonDetailPresenter()
+        let viewController = PokemonDetailViewController(presenter: presenter, pokemon: pokemon)
         navigationController.pushViewController(viewController, animated: true)
     }
 }
