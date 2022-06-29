@@ -8,6 +8,7 @@ final class PokemonListViewControllerTests: XCTestCase {
 
     // MARK: - Test doubles
 
+    private lazy var coordinator = AppCoordinator(window: window)
     private let tableViewSpy = PokemonListViewSpy()
     private let remoteServiceDummy = PokemonApiServiceDummy()
     private lazy var presentationLogicSpy = PokemonListPresentationLogicSpy(remoteService: remoteServiceDummy)
@@ -15,7 +16,7 @@ final class PokemonListViewControllerTests: XCTestCase {
 
     // MARK: - Subject under test
 
-    private lazy var sut = PokemonListViewController(presenter: presentationLogicSpy, adapter: pokemonTableAdapterSpy)
+    private lazy var sut = PokemonListViewController(presenter: presentationLogicSpy, adapter: pokemonTableAdapterSpy, coordinator: coordinator)
 
     // MARK: - Test setup
 

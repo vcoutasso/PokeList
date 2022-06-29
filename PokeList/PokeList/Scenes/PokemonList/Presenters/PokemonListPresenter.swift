@@ -1,4 +1,5 @@
 import Foundation
+import UIKit
 
 protocol PokemonListPresentationLogic: AnyObject {
     associatedtype ServiceType: PokeApiServiceProtocol
@@ -7,6 +8,7 @@ protocol PokemonListPresentationLogic: AnyObject {
     var remoteService: ServiceType { get }
 
     func fetchDataRequested()
+    func showPokemonDetailRequested(for pokemon: Pokemon)
 
     func registerDisplayLogicDelegate(_ delegate: PokemonListDisplayLogic)
 }
@@ -16,11 +18,13 @@ final class PokemonListPresenter<PokeApiServiceType: PokeApiServiceProtocol>: Po
 
     weak var displayLogicDelegate: PokemonListDisplayLogic?
     let remoteService: PokeApiServiceType
+    let coordinator: PokemonListCoordinator
 
     // MARK: - Initialization
 
-    init(remoteService: PokeApiServiceType) {
+    init(remoteService: PokeApiServiceType, navigationController: UINavigationController) {
         self.remoteService = remoteService
+        self.coordinator = PokemonListCoordinator(navigationController: navigationController)
     }
 
     // MARK: - Protocol methods
@@ -32,6 +36,10 @@ final class PokemonListPresenter<PokeApiServiceType: PokeApiServiceProtocol>: Po
                 self.displayLogicDelegate?.displayPokemons(pokemonPage, pokemonCount: pokemonCount)
             }
         }
+    }
+
+    func showPokemonDetailRequested(for pokemon: Pokemon) {
+        coordinator.showPokemonDetail(pokemon)
     }
 
     func registerDisplayLogicDelegate(_ delegate: PokemonListDisplayLogic) {

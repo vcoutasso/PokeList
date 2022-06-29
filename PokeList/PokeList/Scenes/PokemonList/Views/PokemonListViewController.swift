@@ -2,9 +2,10 @@ import UIKit
 
 protocol PokemonListDisplayLogic: AnyObject {
     func displayPokemons(_ pokemons: [Pokemon], pokemonCount: Int)
+    func displayPokemonDetail(_ pokemon: Pokemon)
 }
 
-final class PokemonListViewController<PresenterType: PokemonListPresentationLogic, AdapterType: TableViewAdapter>: UIViewController where AdapterType.DataType == Pokemon {
+final class PokemonListViewController<PresenterType: PokemonListPresentationLogic, AdapterType: PokemonTableAdapter>: UIViewController {
 
     // MARK: - Dependencies
 
@@ -34,6 +35,7 @@ final class PokemonListViewController<PresenterType: PokemonListPresentationLogi
         super.init(nibName: nil, bundle: nil)
 
         presenter.registerDisplayLogicDelegate(self)
+        adapter.registerDisplayLogicDelegate(self)
 
         adapter.registerPrefetchCallback { [weak self] in
             self?.requestData()
@@ -86,5 +88,9 @@ extension PokemonListViewController: PokemonListDisplayLogic {
 
         let indexPathsToReload = adapter.visibleIndexPathsToReload(pokemonListView.tableView, intersecting: newIndexPaths)
         pokemonListView.reloadRows(at: indexPathsToReload)
+    }
+
+    func displayPokemonDetail(_ pokemon: Pokemon) {
+        presenter.showPokemonDetailRequested(for: pokemon)
     }
 }

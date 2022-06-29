@@ -3,7 +3,6 @@ import UIKit
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
-    private(set) var appCoordinator: AppCoordinator?
 
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
@@ -15,8 +14,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let window = UIWindow(windowScene: windowScene)
         self.window = window
 
-        appCoordinator = AppCoordinator(window: window)
-        appCoordinator?.start()
+        let navigationController = UINavigationController()
+        let appCoordinator = AppCoordinator(window: window, navigationController: navigationController)
+        appCoordinator.start()
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
