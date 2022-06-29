@@ -18,13 +18,13 @@ final class PokemonListPresenter<PokeApiServiceType: PokeApiServiceProtocol>: Po
 
     weak var displayLogicDelegate: PokemonListDisplayLogic?
     let remoteService: PokeApiServiceType
-    let coordinator: PokemonListCoordinator
+    let coordinator: PokemonListCoordinatorProtocol
 
     // MARK: - Initialization
 
-    init(remoteService: PokeApiServiceType, navigationController: UINavigationController) {
+    init(remoteService: PokeApiServiceType, coordinator: PokemonListCoordinatorProtocol) {
         self.remoteService = remoteService
-        self.coordinator = PokemonListCoordinator(navigationController: navigationController)
+        self.coordinator = coordinator
     }
 
     // MARK: - Protocol methods

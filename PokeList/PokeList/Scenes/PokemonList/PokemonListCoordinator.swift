@@ -1,7 +1,11 @@
 import Foundation
 import UIKit
 
-final class PokemonListCoordinator: Coordinator {
+protocol PokemonListCoordinatorProtocol: Coordinator {
+    func showPokemonDetail(_ pokemon: Pokemon)
+}
+
+final class PokemonListCoordinator: PokemonListCoordinatorProtocol {
     let navigationController: UINavigationController
 
     init(navigationController: UINavigationController) {
