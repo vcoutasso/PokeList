@@ -19,12 +19,14 @@ final class PokemonListPresenter<PokeApiServiceType: PokeApiServiceProtocol>: Po
     private(set) weak var displayLogicDelegate: PokemonListDisplayLogic?
     let remoteService: PokeApiServiceType
     let coordinator: PokemonListCoordinatorProtocol
+    let dispatchQueue: Dispatchable
 
     // MARK: - Initialization
 
-    init(remoteService: PokeApiServiceType, coordinator: PokemonListCoordinatorProtocol) {
+    init(remoteService: PokeApiServiceType, coordinator: PokemonListCoordinatorProtocol, dispatchQueue: Dispatchable) {
         self.remoteService = remoteService
         self.coordinator = coordinator
+        self.dispatchQueue = dispatchQueue
     }
 
     // MARK: - Protocol methods
@@ -32,7 +34,7 @@ final class PokemonListPresenter<PokeApiServiceType: PokeApiServiceProtocol>: Po
     func fetchDataRequested() {
         remoteService.fetchNextPage { [weak self] pokemonPage, pokemonCount in
             guard let self = self else { return }
-            DispatchQueue.main.async {
+            self.dispatchQueue.async {
                 self.displayLogicDelegate?.displayPokemons(pokemonPage, pokemonCount: pokemonCount)
             }
         }

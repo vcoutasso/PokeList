@@ -6,10 +6,11 @@ final class PokemonListPresenterTests: XCTestCase {
 
     private let remoteServiceSpy = PokemonApiServiceSpy()
     private let coordinatorSpy = PokemonListCoordinatorSpy()
+    private let dispatchQueueFake = DispatchQueueFake()
 
-    // MARK: = Subject under test
+    // MARK: - Subject under test
 
-    private lazy var sut = PokemonListPresenter(remoteService: remoteServiceSpy, coordinator: coordinatorSpy)
+    private lazy var sut = PokemonListPresenter(remoteService: remoteServiceSpy, coordinator: coordinatorSpy, dispatchQueue: dispatchQueueFake)
 
     // MARK: - Tests
 
@@ -30,10 +31,7 @@ final class PokemonListPresenterTests: XCTestCase {
         sut.fetchDataRequested()
 
         // Then
-        // TODO: This could be more elegant
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            XCTAssert(spy.displayPokemonsCalled)
-        }
+        XCTAssert(spy.displayPokemonsCalled)
     }
 
     func testShowPokemonDetailRequestedShouldCallCoordinatorShowPokemonDetail() {

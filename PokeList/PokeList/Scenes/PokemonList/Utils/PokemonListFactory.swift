@@ -14,7 +14,7 @@ final class PokemonListFactory: PokemonListFactoryProtocol {
     static func makeViewController(navigationController: UINavigationController) -> UIViewController {
         let service = PokemonListFactory.makeService()
         let coordinator = PokemonListCoordinator(navigationController: navigationController)
-        let presenter = PokemonListPresenter(remoteService: service, coordinator: coordinator)
+        let presenter = PokemonListPresenter(remoteService: service, coordinator: coordinator, dispatchQueue: DispatchQueue.main)
         let adapter = PokemonTableAdapter()
         let viewController = PokemonListViewController(presenter: presenter, adapter: adapter)
 
