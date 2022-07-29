@@ -11,7 +11,7 @@ protocol PokemonListViewProtocol {
 final class PokemonListView: CodedView, PokemonListViewProtocol {
     // MARK: - Subviews
 
-    lazy var tableView: UITableView = {
+    private(set) lazy var tableView: UITableView = {
         UITableView()
     }()
 

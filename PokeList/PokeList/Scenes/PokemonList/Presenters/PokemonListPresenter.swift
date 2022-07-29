@@ -16,7 +16,7 @@ protocol PokemonListPresentationLogic: AnyObject {
 final class PokemonListPresenter<PokeApiServiceType: PokeApiServiceProtocol>: PokemonListPresentationLogic where PokeApiServiceType.RequestData == Pokemon {
     // MARK: - Protocol properties
 
-    weak var displayLogicDelegate: PokemonListDisplayLogic?
+    private(set) weak var displayLogicDelegate: PokemonListDisplayLogic?
     let remoteService: PokeApiServiceType
     let coordinator: PokemonListCoordinatorProtocol
 
@@ -43,6 +43,6 @@ final class PokemonListPresenter<PokeApiServiceType: PokeApiServiceProtocol>: Po
     }
 
     func registerDisplayLogicDelegate(_ delegate: PokemonListDisplayLogic) {
-        self.displayLogicDelegate = delegate
+        displayLogicDelegate = delegate
     }
 }

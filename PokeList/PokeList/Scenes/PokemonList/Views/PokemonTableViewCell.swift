@@ -31,8 +31,8 @@ final class PokemonTableViewCell: CodedTableViewCell, ReusableView {
     // MARK: - View lifecycle
 
     override func addSubviews() {
-        addSubview(nameLabel)
-        addSubview(loadingIndicatorView)
+        contentView.addSubview(nameLabel)
+        contentView.addSubview(loadingIndicatorView)
     }
 
     override func constrainSubviews() {
